@@ -1,3 +1,5 @@
+"""Ingest files with the `pdf` extension."""
+
 import os
 import subprocess
 from typing import List
@@ -8,10 +10,20 @@ from .QuoteModel import QuoteModel
 
 
 class PDFIngestor(IngestorInterface):
+    """Ingest files with the `pdf` extension."""
+
     allowed_extensions = ['pdf']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """
+        Extract quote data from `pdf` file using `pdftotext` CMD tool and create QuoteModel objects from each line.
+
+        The `PDFIngestor` first converts pdf to text files before extracting its
+        content. Upon completion, the text file is deleted.
+
+        Raise an exception if an unaccepted file extension is passed.
+        """
         if not cls.can_ingest(path):
             raise Exception("Cannot ingest file exception.")
 

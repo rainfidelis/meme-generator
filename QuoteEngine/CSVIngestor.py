@@ -1,3 +1,5 @@
+"""Ingest files with the `csv` extension."""
+
 import pandas as pd
 from typing import List
 
@@ -6,10 +8,17 @@ from .QuoteModel import QuoteModel
 
 
 class CSVIngestor(IngestorInterface):
+    """Ingest files with the `csv` extension."""
+
     allowed_extensions = ['csv']
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
+        """
+        Extract quote data from `csv` file using `pandas` and create QuoteModel objects from each row.
+
+        Raise an exception if an unaccepted file extension is passed.
+        """
         if not cls.can_ingest(path):
             raise Exception("Cannot ingest file exception.")
 
