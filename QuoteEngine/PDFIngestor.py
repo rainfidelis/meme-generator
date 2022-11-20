@@ -7,6 +7,7 @@ from random import randint
 
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
+from .Errors import FileIngestError
 
 
 class PDFIngestor(IngestorInterface):
@@ -25,7 +26,7 @@ class PDFIngestor(IngestorInterface):
         Raise an exception if an unaccepted file extension is passed.
         """
         if not cls.can_ingest(path):
-            raise Exception("Cannot ingest file exception.")
+            raise FileIngestError(path, "PDFIngestor")
 
         quotes = []
         tmp = f"./tmp/{randint(0, 1000000)}.txt"

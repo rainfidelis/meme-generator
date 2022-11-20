@@ -5,6 +5,7 @@ from typing import List
 
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
+from .Errors import FileIngestError
 
 
 class CSVIngestor(IngestorInterface):
@@ -20,7 +21,7 @@ class CSVIngestor(IngestorInterface):
         Raise an exception if an unaccepted file extension is passed.
         """
         if not cls.can_ingest(path):
-            raise Exception("Cannot ingest file exception.")
+            raise FileIngestError(path, "CSVIngestor")
 
         quotes = []
         df = pd.read_csv(path, header=0)

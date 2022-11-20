@@ -5,6 +5,7 @@ from typing import List
 
 from .IngestorInterface import IngestorInterface
 from .QuoteModel import QuoteModel
+from .Errors import FileIngestError
 
 
 class DocxIngestor(IngestorInterface):
@@ -20,7 +21,7 @@ class DocxIngestor(IngestorInterface):
         Raise an exception if an unaccepted file extension is passed.
         """
         if not cls.can_ingest(path):
-            raise Exception("Cannot ingest file exception.")
+            raise FileIngestError(path, "DocxIngestor")
 
         quotes = []
         doc = docx.Document(path)

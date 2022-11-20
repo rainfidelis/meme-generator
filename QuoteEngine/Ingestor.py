@@ -8,6 +8,7 @@ from .PDFIngestor import PDFIngestor
 from .TxtIngestor import TxtIngestor
 from .DocxIngestor import DocxIngestor
 from .QuoteModel import QuoteModel
+from .Errors import FileIngestError
 
 
 class Ingestor(IngestorInterface):
@@ -27,4 +28,4 @@ class Ingestor(IngestorInterface):
                 quotes = ingestor.parse(path)
                 return quotes
 
-        raise Exception("Cannot ingest file exception.")
+        raise FileIngestError(path)
