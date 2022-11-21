@@ -7,3 +7,4 @@ returned by the appropriate `Ingestor`.
 
 
 from .Ingestor import Ingestor
+from .QuoteModel import QuoteModel
