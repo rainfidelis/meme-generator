@@ -60,6 +60,9 @@ def meme_form():
 @app.route('/create', methods=['POST'])
 def meme_post():
     """Create a user defined meme."""
+    # Initialize new meme for each request
+    meme = MemeEngine('./static')
+
     # Receive form data
     img_url = request.form.get('image_url')
     body = request.form.get('body')

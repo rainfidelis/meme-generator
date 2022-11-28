@@ -1,7 +1,9 @@
 """Create a meme object generator."""
 
 import random
+import textwrap
 from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from string import ascii_letters
 
 
 class MemeEngine:
@@ -29,7 +31,7 @@ class MemeEngine:
         :return: The string location of the newly created meme.
         """
         fonts = ["./_fonts/LilitaOne-Regular.ttf",
-                 "./_fonts/Satisfy-Regular.ttf"]
+                 "./_fonts/Lobster-Regular.ttf"]
 
         with Image.open(img_path) as img:
 
@@ -41,12 +43,20 @@ class MemeEngine:
             # Blur image for clearer quotes
             img = img.filter(ImageFilter.BLUR)
 
-            # Add caption to image
-            message = f"{text}\n - {author}"
+            # Define text and font
+            txt = f"{text} - {author}"
             fnt = ImageFont.truetype(random.choice(fonts), 30)
-            d = ImageDraw.Draw(img)
-            d.multiline_text((100, 350), message, font=fnt,
-                             fill='red', align="center")
+
+            # Calculate the average length of a character and scale char count
+            avg_char_width = (sum(fnt.getsize(char)[0]
+                              for char in ascii_letters) / len(ascii_letters))
+            max_char_count = int(img.size[0] * .90 / avg_char_width)
+
+            # Create wrapped text object using the scaled character count
+            txt = textwrap.fill(text=txt, width=max_char_count)
+            draw = ImageDraw.Draw(img)
+            draw.text((img.size[0]/2, img.size[1]/2), text=txt, font=fnt,
+                      fill='red', anchor="mm")
 
             # Save image
             img.save(self.out_path)
