@@ -11,10 +11,10 @@ from MemeEngine import MemeEngine
 def generate_meme(path=None, body=None, author=None):
     """
     Generate a meme given an image path and a quote.
-    
+
     If no path or quote is given, generate a meme with a random quote and image
-    from the existing database. All parameters default to `None`, in which case a
-    random meme has to be generated.
+    from the existing database. All parameters default to `None`, in which case
+    a random meme has to be generated.
 
     :param path: Relative path to the image file
     :param body: Quote body for the meme
@@ -63,6 +63,6 @@ if __name__ == "__main__":
                         help="Optional quote body for the image", type=str)
     parser.add_argument('--author', '-a',
                         help="Optional quote author for the image", type=str)
-    
+
     args = parser.parse_args()
     print(generate_meme(args.path, args.body, args.author))

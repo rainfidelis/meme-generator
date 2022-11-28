@@ -28,7 +28,8 @@ class MemeEngine:
 
         :return: The string location of the newly created meme.
         """
-        fonts = ["./_fonts/LilitaOne-Regular.ttf", "./_fonts/Satisfy-Regular.ttf"]
+        fonts = ["./_fonts/LilitaOne-Regular.ttf",
+                 "./_fonts/Satisfy-Regular.ttf"]
 
         with Image.open(img_path) as img:
 
@@ -44,10 +45,10 @@ class MemeEngine:
             message = f"{text}\n - {author}"
             fnt = ImageFont.truetype(random.choice(fonts), 30)
             d = ImageDraw.Draw(img)
-            d.multiline_text((100, 350), message, font=fnt, fill='red', align="center")
+            d.multiline_text((100, 350), message, font=fnt,
+                             fill='red', align="center")
 
             # Save image
             img.save(self.out_path)
 
             return self.out_path
-

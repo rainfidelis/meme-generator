@@ -15,7 +15,10 @@ class TxtIngestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """
-        Extract quote data from `txt` file using and create QuoteModel objects from each line.
+        Extract quote data from `txt` file.
+
+        Open files using the built-in `open()` function and create
+        QuoteModel objects from each line.
 
         Raise an exception if an unaccepted file extension is passed.
         """

@@ -18,10 +18,11 @@ class PDFIngestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """
-        Extract quote data from `pdf` file using `pdftotext` CMD tool and create QuoteModel objects from each line.
+        Extract quote data from `pdf` file.
 
-        The `PDFIngestor` first converts pdf to text files before extracting its
-        content. Upon completion, the text file is deleted.
+        Use the `pdftotext` CMD tool and create QuoteModel objects from each
+        line. The `PDFIngestor` first converts pdf to text files before
+        extracting its content. Upon completion, the text file is deleted.
 
         Raise an exception if an unaccepted file extension is passed.
         """

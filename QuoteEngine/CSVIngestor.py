@@ -16,7 +16,10 @@ class CSVIngestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """
-        Extract quote data from `csv` file using `pandas` and create QuoteModel objects from each row.
+        Extract quote data from `csv` file.
+
+        Read csv data using `pandas` and create QuoteModel objects from each
+        row.
 
         Raise an exception if an unaccepted file extension is passed.
         """

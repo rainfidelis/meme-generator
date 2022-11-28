@@ -1,9 +1,10 @@
 """Custom error classes for the quote engine."""
 
+
 class FileIngestError(Exception):
     """
     Raised when a file extension is not compatible with the called ingestor.
-    
+
     :param path: A data file path of type string
     :param ingestor: The string name of the selected ingestor interface.
     """

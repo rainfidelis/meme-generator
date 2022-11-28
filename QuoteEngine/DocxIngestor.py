@@ -16,7 +16,10 @@ class DocxIngestor(IngestorInterface):
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """
-        Extract quote data from `docx` file using `docx` library and create QuoteModel objects from each paragraph.
+        Extract quote data from `docx` file.
+
+        Read files using the `docx` library and create QuoteModel objects from
+        each paragraph.
 
         Raise an exception if an unaccepted file extension is passed.
         """

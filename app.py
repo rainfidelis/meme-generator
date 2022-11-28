@@ -3,7 +3,10 @@
 import random
 import os
 import requests
-from flask import Flask, render_template, abort, request, flash, redirect, url_for
+from flask import (
+            Flask, render_template,
+            abort, request, flash,
+            redirect, url_for)
 
 from QuoteEngine import Ingestor, QuoteModel
 from MemeEngine import MemeEngine

@@ -1,4 +1,4 @@
-"""Leverage other realized ingestor classes to ingest `pdf`, `csv`, `txt`, and `docx` files."""
+"""Leverage other realized ingestor classes to ingest every file type."""
 
 from typing import List
 
@@ -12,16 +12,19 @@ from .Errors import FileIngestError
 
 
 class Ingestor(IngestorInterface):
-    """Leverage other realized ingestor classes to ingest `pdf`, `csv`, `txt`, and `docx` files."""
+    """Leverage other realized ingestor classes to ingest every file type."""
 
     ingestors = [CSVIngestor, PDFIngestor, TxtIngestor, DocxIngestor]
 
     @classmethod
     def parse(cls, path: str) -> List[QuoteModel]:
         """
-        Find the appropriate ingestor for the provided file type and return a list of QuoteModel objects.
+        Find the appropriate ingestor for the provided file type.
 
-        Raise `cannot ingest exception` if file type is not supported by any ingestor.
+        Return a list of QuoteModel objects.
+
+        Raise `cannot ingest exception` if file type is not supported by any
+        ingestor.
         """
         for ingestor in cls.ingestors:
             if ingestor.can_ingest(path):
