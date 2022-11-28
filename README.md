@@ -84,7 +84,7 @@ Sample usage patterns include:
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@rainfidelis](https://twitter.com/rainfidelis) - rainnyfidelis@gmail.com
+Rainny Fidelis - [@rainfidelis](https://twitter.com/rainfidelis) - rainnyfidelis@gmail.com
 
 Project Link: [https://github.com/rainfidelis/meme-generator](https://github.com/rainfidelis/meme-generator)
 
