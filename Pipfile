@@ -8,6 +8,7 @@ python-docx = "*"
 pandas = "*"
 pydocstyle = "*"
 pillow = "*"
+flask = "*"
 
 [dev-packages]
 

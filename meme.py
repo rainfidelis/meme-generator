@@ -18,9 +18,9 @@ class MemeEngine:
     """
 
     def __init__(self, output_dir) -> None:
-        """Initialize the `MemeEngine` with the desired output directory."""
-        self.output_dir = output_dir
-    
+        """Initialize the `MemeEngine` with the output file name."""
+        self.out_path = f"{output_dir}/{random.randint(0, 1000000)}.jpg"
+
     def make_meme(self, img_path, text, author, width=500) -> str:
         """
         Create a meme using the provided image and quote details.
@@ -48,17 +48,16 @@ class MemeEngine:
             d.multiline_text((150, 350), message, font=fnt, fill='black', align="center")
 
             # Save image
-            out_path = f"{self.output_dir}/{random.randint(0, 1000000)}.jpg"
-            img.save(out_path)
+            img.save(self.out_path)
 
-            return out_path
+            return self.out_path
 
 
 def generate_meme(path=None, body=None, author=None):
     """
-    Generate a meme given a path and a quote.
+    Generate a meme given an image path and a quote.
     
-    If no path or quote is given, generate a meme with a random quote or path
+    If no path or quote is given, generate a meme with a random quote and image
     from the existing database. All parameters default to `None`, in which case a
     random meme has to be generated.
 
