@@ -1,7 +1,7 @@
 """Create a meme object generator."""
 
 import random
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
+from PIL import Image, ImageFont, ImageDraw
 
 
 class MemeEngine:
@@ -33,18 +33,15 @@ class MemeEngine:
         with Image.open(img_path) as img:
 
             # Resize image while maintaining the existing aspect ratio
-            ratio = width/float(img.size[0])
-            height = int(ratio*float(img.size[1]))
+            ratio = img.size[0] / img.size[1]
+            height = int(ratio * img.size[1])
             img = img.resize((width, height), Image.Resampling.NEAREST)
-
-            # Blur image for clearer quotes
-            img = img.filter(ImageFilter.BLUR)
 
             # Add caption to image
             message = f"{text}\n - {author}"
             fnt = ImageFont.truetype(random.choice(fonts), 30)
             d = ImageDraw.Draw(img)
-            d.multiline_text((100, 350), message, font=fnt, fill='red', align="center")
+            d.multiline_text((150, 350), message, font=fnt, fill='black', align="center")
 
             # Save image
             img.save(self.out_path)
