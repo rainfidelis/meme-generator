@@ -80,6 +80,12 @@ Sample usage patterns include:
 - `python meme.py -b QUOTE_BODY -a QUOTE_AUTHOR` for generating a random image meme with a specific quote
 - `python meme.py -b QUOTE_BODY -a QUOTE_AUTHOR -p IMAGE_PATH` for generating a completely custom meme.
 
+To run the program as a web app on your local machine:
+- Launch the app on your command line:
+  ```sh
+  python app.py
+  ```
+- Launch the web server at [http://127.0.0.1:5000/](http://127.0.0.1:5000/)
 
 <!-- CONTACT -->
 ## Contact
