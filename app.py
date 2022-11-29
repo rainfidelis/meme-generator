@@ -15,8 +15,6 @@ from MemeEngine import MemeEngine
 app = Flask(__name__)
 app.secret_key = os.urandom(12)
 
-meme = MemeEngine('./static')
-
 
 def setup():
     """Load all resources."""
@@ -47,6 +45,8 @@ def meme_rand():
     """Generate a random meme."""
     img = random.choice(imgs)
     quote = random.choice(quotes)
+
+    meme = MemeEngine('./static')
     path = meme.make_meme(img, quote.body, quote.author)
     return render_template('meme.html', path=path)
 
@@ -72,6 +72,7 @@ def meme_post():
     response = requests.get(img_url)
     if response.status_code == 200:
         img_path = f'./_data/photos/uploads/{random.randint(0, 100000000)}.png'
+        
         with open(img_path, 'wb') as img:
             img.write(response.content)
 
