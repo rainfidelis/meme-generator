@@ -72,7 +72,7 @@ def meme_post():
     response = requests.get(img_url)
     if response.status_code == 200:
         img_path = f'./_data/photos/uploads/{random.randint(0, 100000000)}.png'
-        
+
         with open(img_path, 'wb') as img:
             img.write(response.content)
 
