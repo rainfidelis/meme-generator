@@ -19,14 +19,15 @@ class MemeEngine:
         """Initialize the `MemeEngine` with the output file name."""
         self.out_path = f"{output_dir}/{random.randint(0, 1000000)}.jpg"
 
-    def make_meme(self, img_path, text, author, width=500) -> str:
+    def make_meme(self, img_path, text, author, text_color="black", width=500) -> str:
         """
         Create a meme using the provided image and quote details.
 
         :param img_path: Relative path to the image file
         :param text: Quote body for the meme
         :param author: Author of the provided quote
-        :param width: Width to use when resizing image. Defaults to 500
+        :param text_color: Define your desired text color. Defaults to black.
+        :param width: Width to use when resizing image. Defaults to 500.
 
         :return: The string location of the newly created meme.
         """
@@ -56,7 +57,7 @@ class MemeEngine:
             txt = textwrap.fill(text=txt, width=max_char_count)
             draw = ImageDraw.Draw(img)
             draw.text((img.size[0]/2, img.size[1]/2), text=txt, font=fnt,
-                      fill='red', anchor="mm")
+                      fill=text_color, anchor="mm")
 
             # Save image
             img.save(self.out_path)

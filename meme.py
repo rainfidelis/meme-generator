@@ -45,8 +45,14 @@ def generate_meme(path=None, body=None, author=None):
         quote = random.choice(quotes)
     else:
         if author is None:
-            raise Exception('Author Required if Body is Used')
+            raise Exception('Author required if quote body is provided')
         quote = QuoteModel(body, author)
+
+    if author:
+        if body:
+            quote = QuoteModel(body, author)
+        else:
+            raise Exception('You must provide a quote body with an author.')
 
     meme = MemeEngine('./tmp')
     path = meme.make_meme(img, quote.body, quote.author)
