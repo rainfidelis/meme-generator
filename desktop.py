@@ -10,6 +10,7 @@
 
 import os
 import random
+import pathlib
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from QuoteEngine import QuoteModel, Ingestor
@@ -107,9 +108,71 @@ class Ui_MemeApp(object):
 
     def form_window(self):
         """Open a new window with an input form."""
-        # self.window = FormWindow()
+        self.window = FormWindow()
         self.window.show()
-        self.close()
+        # MainWindow.close()
+
+
+class FormWindow(QtWidgets.QWidget):
+    """Generate new window with an input form for custom meme creation."""
+
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle('Create Your Meme')
+        self.resize(502, 528)
+
+        # Create image selector
+        self.file_label = QtWidgets.QLabel('Select Image:')
+        self.file_label.setFont(QtGui.QFont("Helvetica", 14))
+        self.file_selector = QtWidgets.QPushButton('Browse')
+        self.file_selector.clicked.connect(self.select_image)
+
+        # Create text fields
+        self.quote_label = QtWidgets.QLabel('Quote:')
+        self.quote_label.setFont(QtGui.QFont("Helvetica", 14))
+        self.quote_field = QtWidgets.QLineEdit()
+        self.author_label = QtWidgets.QLabel('Author:')
+        self.author_label.setFont(QtGui.QFont("Helvetica", 14))
+        self.author_field = QtWidgets.QLineEdit()
+
+        # Create submit button
+        self.submit_button = QtWidgets.QPushButton('Create Meme!')
+        self.submit_button.clicked.connect(self.submit_form)
+
+        # Add all elements to layout
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.file_label)
+        layout.addWidget(self.file_selector)
+        layout.addWidget(self.quote_label)
+        layout.addWidget(self.quote_field)
+        layout.addWidget(self.author_label)
+        layout.addWidget(self.author_field)
+        layout.addWidget(self.submit_button)
+        self.setLayout(layout)
+
+    def select_image(self):
+        # Open file dialog and set selected file to label
+        file_dialog = QtWidgets.QFileDialog()
+        file_dialog.setDefaultSuffix('.txt')
+        path = str(pathlib.Path.home()) + "\\Downloads"
+        filename, _ = file_dialog.getOpenFileName(self, "Choose an image", 
+                                    path, "PNG Files (*.png);; JPG Files (*.jpg)")
+        self.file_label.setText('Selected file: ' + filename)
+
+    def submit_form(self):
+        # Get all form data and print to console
+        img = self.file_label.text().split(': ')[1]
+        qt_body = self.quote_field.text()
+        qt_author = self.author_field.text()
+
+        # Create meme
+        quote = QuoteModel(qt_body, qt_author)
+        meme = MemeEngine('./tmp')
+        img_path = meme.make_meme(img, quote.body, quote.author)
 
 
 if __name__ == "__main__":
