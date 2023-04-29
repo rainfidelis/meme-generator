@@ -43,24 +43,24 @@ class MemeApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Meme Generator")
-        self.setGeometry(100, 100, 502, 528)
+        self.resize(502, 528)
 
         # Display generated meme on main window
         img_path = self.random_meme()
-        self.memeImage = QtWidgets.QLabel(self)
-        self.memeImage.setGeometry(QtCore.QRect(0, 0, 501, 381))
-        self.memeImage.setPixmap(QtGui.QPixmap(img_path))
+        self.meme_image = QtWidgets.QLabel(self)
+        self.meme_image.setGeometry(QtCore.QRect(0, 0, 501, 381))
+        self.meme_image.setPixmap(QtGui.QPixmap(img_path))
 
         # Define button configurations
-        self.randomButton = QtWidgets.QPushButton("Random", self)
-        self.randomButton.setGeometry(QtCore.QRect(175, 400, 75, 23))
-        self.randomButton.setStatusTip("Generate a random meme")
-        self.randomButton.clicked.connect(self.click_random)
+        self.random_button = QtWidgets.QPushButton("Random", self)
+        self.random_button.setGeometry(QtCore.QRect(175, 400, 75, 23))
+        self.random_button.setStatusTip("Generate a random meme")
+        self.random_button.clicked.connect(self.click_random)
 
-        self.createButton = QtWidgets.QPushButton("Creator", self)
-        self.createButton.setGeometry(QtCore.QRect(255, 400, 75, 23))
-        self.createButton.setStatusTip("Create a custom meme")
-        self.createButton.clicked.connect(self.form_window)
+        self.create_button = QtWidgets.QPushButton("Creator", self)
+        self.create_button.setGeometry(QtCore.QRect(255, 400, 75, 23))
+        self.create_button.setStatusTip("Create a custom meme")
+        self.create_button.clicked.connect(self.form_window)
 
         # Create status bar
         self.statusBar()
@@ -77,7 +77,7 @@ class MemeApp(QMainWindow):
     def click_random(self):
         """Generate a new image whenever the `random` button is clicked."""
         path = self.random_meme()
-        self.memeImage.setPixmap(QtGui.QPixmap(path))
+        self.meme_image.setPixmap(QtGui.QPixmap(path))
 
     def form_window(self):
         """Open a new window with an input form."""
@@ -89,7 +89,7 @@ class MemeApp(QMainWindow):
         quote = QuoteModel(data_list[1], data_list[2])
         meme = MemeEngine('./tmp')
         meme_path = meme.make_meme(data_list[0], quote.body, quote.author)
-        self.memeImage.setPixmap(QtGui.QPixmap(meme_path))
+        self.meme_image.setPixmap(QtGui.QPixmap(meme_path))
 
 
 class FormWindow(QWidget):
