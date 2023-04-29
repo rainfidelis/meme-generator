@@ -7,7 +7,7 @@ import shutil
 
 # PyQt5 imports
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication
+from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QMessageBox
 
 # Local imports
 from QuoteEngine import QuoteModel, Ingestor
@@ -54,19 +54,19 @@ class MemeApp(QMainWindow):
 
         # Button for generating random memes
         self.random_button = QtWidgets.QPushButton("Random", self)
-        self.random_button.setGeometry(QtCore.QRect(145, 400, 75, 23))
+        self.random_button.setGeometry(QtCore.QRect(55, 400, 120, 50))
         self.random_button.setStatusTip("Generate a random meme")
         self.random_button.clicked.connect(self.click_random)
 
         # Button for creating custom memes
         self.create_button = QtWidgets.QPushButton("Creator", self)
-        self.create_button.setGeometry(QtCore.QRect(225, 400, 75, 23))
+        self.create_button.setGeometry(QtCore.QRect(195, 400, 120, 50))
         self.create_button.setStatusTip("Create a custom meme")
         self.create_button.clicked.connect(self.form_window)
 
         # Button for saving images
         self.save_button = QtWidgets.QPushButton("Save", self)
-        self.save_button.setGeometry(QtCore.QRect(305, 400, 75, 23))
+        self.save_button.setGeometry(QtCore.QRect(335, 400, 120, 50))
         self.save_button.setStatusTip("Save image to folder")
         self.save_button.clicked.connect(self.save_image)
 
@@ -108,6 +108,15 @@ class MemeApp(QMainWindow):
         dst = str(pathlib.Path.home()) + "\\Downloads"
         filename, _ = dialog.getSaveFileName(self, "Save Image", dst, "(*.jpg)")
         shutil.copyfile(self.current_path, filename)
+        self.confirmation_message()
+
+    def confirmation_message(self):
+        """Show confirmation message after save"""
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setText("Image saved successfully!")
+        msg_box.setWindowTitle("Success")
+        msg_box.exec_()
 
 
 class FormWindow(QWidget):
