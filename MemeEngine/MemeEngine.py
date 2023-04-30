@@ -51,7 +51,7 @@ class MemeEngine:
             max_char_count = int(img.size[0] * .90 / avg_char_width)
 
             # Create text on background for text
-            bg = Image.new('RGB', (500, 130), color=(7, 8, 8))
+            bg = Image.new('RGBA', (500, 130), color=(0, 0, 0))
 
             # Wrapped the text object using the scaled character count
             txt = textwrap.fill(text=txt, width=max_char_count)

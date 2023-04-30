@@ -44,29 +44,30 @@ class MemeApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Meme Generator")
-        self.resize(502, 528)
+        self.setFixedSize(540, 620)
 
         # Display generated meme on main window
         img_path = self.random_meme()
         self.meme_image = QtWidgets.QLabel(self)
-        self.meme_image.setGeometry(QtCore.QRect(0, 0, 501, 381))
+        self.meme_image.setGeometry(QtCore.QRect(10, 10, 521, 521))
         self.meme_image.setPixmap(QtGui.QPixmap(img_path))
+        self.meme_image.setScaledContents(True)
 
         # Button for generating random memes
         self.random_button = QtWidgets.QPushButton("Random", self)
-        self.random_button.setGeometry(QtCore.QRect(55, 400, 120, 50))
+        self.random_button.setGeometry(QtCore.QRect(65, 540, 120, 50))
         self.random_button.setStatusTip("Generate a random meme")
         self.random_button.clicked.connect(self.click_random)
 
         # Button for creating custom memes
         self.create_button = QtWidgets.QPushButton("Creator", self)
-        self.create_button.setGeometry(QtCore.QRect(195, 400, 120, 50))
+        self.create_button.setGeometry(QtCore.QRect(205, 540, 120, 50))
         self.create_button.setStatusTip("Create a custom meme")
         self.create_button.clicked.connect(self.form_window)
 
         # Button for saving images
         self.save_button = QtWidgets.QPushButton("Save", self)
-        self.save_button.setGeometry(QtCore.QRect(335, 400, 120, 50))
+        self.save_button.setGeometry(QtCore.QRect(345, 540, 120, 50))
         self.save_button.setStatusTip("Save image to folder")
         self.save_button.clicked.connect(self.save_image)
 
@@ -107,8 +108,11 @@ class MemeApp(QMainWindow):
         dialog = QtWidgets.QFileDialog()
         dst = str(pathlib.Path.home()) + "\\Downloads"
         filename, _ = dialog.getSaveFileName(self, "Save Image", dst, "(*.jpg)")
-        shutil.copyfile(self.current_path, filename)
-        self.confirmation_message()
+
+        # Confirm destination file name is provided before attempting copy
+        if len(filename) > 0:
+            shutil.copyfile(self.current_path, filename)
+            self.confirmation_message()
 
     def confirmation_message(self):
         """Show confirmation message after save"""
@@ -129,7 +133,7 @@ class FormWindow(QWidget):
 
     def setup_ui(self):
         self.setWindowTitle('Create Your Meme')
-        self.resize(502, 528)
+        self.resize(540, 620)
 
         # Create image selector
         self.file_label = QtWidgets.QLabel('Select Image:')
