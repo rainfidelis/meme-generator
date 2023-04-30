@@ -19,7 +19,7 @@ class MemeEngine:
         """Initialize the `MemeEngine` with the output file name."""
         self.out_path = f"{output_dir}/{random.randint(0, 1000000)}.jpg"
 
-    def make_meme(self, img_path, text, author, text_color="black", width=500) -> str:
+    def make_meme(self, img_path, text, author, width=500) -> str:
         """
         Create a meme using the provided image and quote details.
 
@@ -41,9 +41,6 @@ class MemeEngine:
             height = int(ratio*float(img.size[1]))
             img = img.resize((width, height), Image.Resampling.NEAREST)
 
-            # Blur image for clearer quotes
-            img = img.filter(ImageFilter.BLUR)
-
             # Define text and font
             txt = f"{text} - {author}"
             fnt = ImageFont.truetype(random.choice(fonts), 30)
@@ -53,11 +50,19 @@ class MemeEngine:
                               for char in ascii_letters) / len(ascii_letters))
             max_char_count = int(img.size[0] * .90 / avg_char_width)
 
-            # Create wrapped text object using the scaled character count
+            # Create text on background for text
+            bg = Image.new('RGB', (500, 130), color=(7, 8, 8))
+
+            # Wrapped the text object using the scaled character count
             txt = textwrap.fill(text=txt, width=max_char_count)
-            draw = ImageDraw.Draw(img)
-            draw.text((img.size[0]/2, img.size[1]/2), text=txt, font=fnt,
-                      fill=text_color, anchor="mm")
+
+            # Write text to the created background
+            draw = ImageDraw.Draw(bg)
+            draw.text((bg.size[0]/2, bg.size[1]/2), text=txt, font=fnt,
+                      fill=(255, 255, 255), anchor="mm")
+            
+            # Append background to the bottom of the original image
+            img.paste(bg, (0, 370))
 
             # Save image
             img.save(self.out_path)
