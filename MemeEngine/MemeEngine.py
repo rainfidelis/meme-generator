@@ -2,9 +2,11 @@
 
 import random
 import textwrap
-from PIL import Image, ImageFont, ImageDraw, ImageFilter
+import os
+from pathlib import Path
 from string import ascii_letters
 
+from PIL import Image, ImageFont, ImageDraw
 
 class MemeEngine:
     """
@@ -31,8 +33,8 @@ class MemeEngine:
 
         :return: The string location of the newly created meme.
         """
-        fonts = ["./_fonts/LilitaOne-Regular.ttf",
-                 "./_fonts/Lobster-Regular.ttf"]
+        self.empty_dir()
+        font = "./_fonts/LilitaOne-Regular.ttf"
 
         with Image.open(img_path) as img:
 
@@ -41,17 +43,17 @@ class MemeEngine:
             height = int(ratio*float(img.size[1]))
             img = img.resize((width, height), Image.Resampling.NEAREST)
 
+            # Create text on background for text
+            bg = Image.new('RGBA', (600, 130), color=(0, 0, 0))
+
             # Define text and font
             txt = f"{text} - {author}"
-            fnt = ImageFont.truetype(random.choice(fonts), 30)
+            fnt = ImageFont.truetype(font, 30)
 
             # Calculate the average length of a character and scale char count
             avg_char_width = (sum(fnt.getsize(char)[0]
                               for char in ascii_letters) / len(ascii_letters))
-            max_char_count = int(img.size[0] * .90 / avg_char_width)
-
-            # Create text on background for text
-            bg = Image.new('RGBA', (500, 130), color=(0, 0, 0))
+            max_char_count = int(bg.size[0] * .90 / avg_char_width)
 
             # Wrapped the text object using the scaled character count
             txt = textwrap.fill(text=txt, width=max_char_count)
@@ -62,9 +64,19 @@ class MemeEngine:
                       fill=(255, 255, 255), anchor="mm")
             
             # Append background to the bottom of the original image
-            img.paste(bg, (0, 370))
+            img.paste(bg, (-40, 370))
 
             # Save image
             img.save(self.out_path)
 
             return self.out_path
+        
+    def empty_dir(self):
+        """
+        A function to keep the project lightweight by emptying the tmp
+        directory each time the make_meme function is called.
+        """
+        existing_files = os.listdir(Path('./tmp'))
+        for file in existing_files:
+            path = Path('./tmp/' + file)
+            os.remove(path)
