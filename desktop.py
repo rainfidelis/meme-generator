@@ -53,20 +53,30 @@ class MemeApp(QMainWindow):
         self.meme_image.setPixmap(QtGui.QPixmap(img_path))
         self.meme_image.setScaledContents(True)
 
+        # Define universal button features
+        font = QtGui.QFont(u"Fixedsys", 25)
+        cursor = QtGui.QCursor(QtCore.Qt.PointingHandCursor)
+
         # Button for generating random memes
         self.random_button = QtWidgets.QPushButton("Random", self)
+        self.random_button.setFont(font)
+        self.random_button.setCursor(cursor)
         self.random_button.setGeometry(QtCore.QRect(65, 540, 120, 50))
         self.random_button.setStatusTip("Generate a random meme")
         self.random_button.clicked.connect(self.click_random)
 
         # Button for creating custom memes
         self.create_button = QtWidgets.QPushButton("Creator", self)
+        self.create_button.setFont(font)
+        self.create_button.setCursor(cursor)
         self.create_button.setGeometry(QtCore.QRect(205, 540, 120, 50))
         self.create_button.setStatusTip("Create a custom meme")
         self.create_button.clicked.connect(self.form_window)
 
         # Button for saving images
         self.save_button = QtWidgets.QPushButton("Save", self)
+        self.save_button.setFont(font)
+        self.save_button.setCursor(cursor)
         self.save_button.setGeometry(QtCore.QRect(345, 540, 120, 50))
         self.save_button.setStatusTip("Save image to folder")
         self.save_button.clicked.connect(self.save_image)
